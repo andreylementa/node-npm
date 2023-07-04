@@ -24,26 +24,73 @@ import readline from "readline-sync";
 
 //init();
 
-class DailyApp {
+//class DailyApp {
+//  constructor() {
+//    this.tasks = [];
+//    this.question = "";
+//    this.started = false;
+//    this.comands = [];
+//  }
+//  start() {
+//    this.started = true;
+//    this.question = readline.question(
+//      "Task - Show tasks Add task - Add Remove task - Remove 0 - Quit\n"
+//    );
+//    while (this.question !== "0") {
+//      this.askQuest();
+//    }
+//  }
+//  askQuest() {
+//    this.question = readline.question(
+//      "Task - Show tasks Add task - Add Remove task - Remove 0 - Quit\n"
+//    );
+//    return this.question;
+//  }
+//}
+
+class EvenGame {
   constructor() {
-    this.tasks = [];
-    this.question = "";
-    this.started = false;
-    this.comands = [];
+    this.name = "";
+    this.counter = 0;
+    this.randomNumber = Math.floor(Math.random() * 100);
+    this.currentAnswer = this.randomNumber % 2 === 0 ? "yes" : "no";
+    this.answer = this.currentAnswer;
   }
-  start() {
-    this.started = true;
-    this.question = readline.question(
-      "Task - Show tasks Add task - Add Remove task - Remove 0 - Quit\n"
+  getName() {
+    this.name = readline.question(
+      "Welcome to the Brain Games!\nMay I have your name?\n"
     );
-    while (this.question !== "0") {
-      this.askQuest();
+    console.log(`Hello, ${this.name}`);
+  }
+  refreshValues() {
+    this.randomNumber = Math.floor(Math.random() * 100);
+    this.currentAnswer = this.randomNumber % 2 === 0 ? "yes" : "no";
+  }
+  play() {
+    let firstAnswer = readline.question(
+      `Answer "yes" if the number is even, otherwise answer "no".\nQuestion: ${this.randomNumber}\n`
+    );
+    if (firstAnswer === this.currentAnswer) {
+      console.log("Correct!");
+      this.counter++;
+      while (this.counter < 3 && this.answer === this.currentAnswer) {
+        this.refreshValues();
+        this.answer = readline.question(`Question: ${this.randomNumber}\n`);
+        this.counter++;
+        this.answer === this.currentAnswer
+          ? console.log("Correct!")
+          : console.log(
+              `Correct answer was ${this.currentAnswer}. Let's try again, ${this.name}!`
+            );
+        this.counter === 3 && console.log(`Congratulations, ${this.name}`);
+      }
+    } else {
+      console.log(
+        `Correct answer was ${this.currentAnswer}. Let's try again, ${this.name}!`
+      );
     }
   }
-  askQuest() {
-    this.question = readline.question(
-      "Task - Show tasks Add task - Add Remove task - Remove 0 - Quit\n"
-    );
-    return this.question;
-  }
 }
+const Bill = new EvenGame();
+Bill.getName();
+Bill.play();
